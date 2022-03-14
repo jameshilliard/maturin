@@ -19,12 +19,22 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - name: Test
+      - name: Checkout resvg
         shell: bash
         run: |
           cd /tmp
           git clone https://github.com/RazrFalcon/resvg
           cd resvg
           cargo package --list
+          cd 
+          cargo package --list --manifest-path /tmp/resvg/Cargo.toml
+      - name: cargo list in dir
+        shell: bash
+        run: |
+          cd /tmp/resvg
+          cargo package --list
+      - name: cargo list with --manifest-path
+        shell: bash
+        run: |
           cd 
           cargo package --list --manifest-path /tmp/resvg/Cargo.toml
