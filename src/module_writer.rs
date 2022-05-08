@@ -838,6 +838,8 @@ pub fn write_dist_info(
 /// If any, copies the data files from the data directory, resolving symlinks to their source.
 /// We resolve symlinks since we require this rather rigid structure while people might need
 /// to save or generate the data in other places
+///
+/// See https://peps.python.org/pep-0427/#file-contents
 pub fn add_data(writer: &mut impl ModuleWriter, data: Option<&Path>) -> Result<()> {
     let possible_data_dir_names = ["data", "scripts", "headers", "purelib", "platlib"];
     if let Some(data) = data {
