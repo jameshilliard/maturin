@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import with_data
@@ -12,7 +13,7 @@ assert installed_data == "Hi! 😊"
 assert (
     venv_root.joinpath("include")
     .joinpath("site")
-    .joinpath("python3.8")
+    .joinpath(f"python{sys.version_info.major}.{sys.version_info.minor}")
     .joinpath("with-data")
     .joinpath("empty.h")
     .is_file()
