@@ -213,6 +213,7 @@ impl BuildOptions {
             manifest_dir,
             extension_name,
             extra_metadata.python_source.as_deref(),
+            extra_metadata.data.as_deref(),
         )?;
 
         let mut args_from_pyproject = Vec::new();
