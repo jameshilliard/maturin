@@ -2,13 +2,11 @@ use crate::auditwheel::{get_policy_and_libs, patchelf, relpath};
 use crate::auditwheel::{PlatformTag, Policy};
 use crate::compile::warn_missing_py_init;
 use crate::module_writer::{
-    write_bin, write_bindings_module, write_cffi_module, write_python_part, WheelWriter,
+    add_data, write_bin, write_bindings_module, write_cffi_module, write_python_part, WheelWriter,
 };
 use crate::python_interpreter::InterpreterKind;
 use crate::source_distribution::source_distribution;
-use crate::{
-    compile, module_writer, Metadata21, ModuleWriter, PyProjectToml, PythonInterpreter, Target,
-};
+use crate::{compile, Metadata21, ModuleWriter, PyProjectToml, PythonInterpreter, Target};
 use anyhow::{anyhow, bail, Context, Result};
 use cargo_metadata::Metadata;
 use fs_err as fs;
@@ -403,7 +401,7 @@ impl BuildContext {
         .context("Failed to add the files to the wheel")?;
 
         self.add_pth(&mut writer)?;
-        module_writer::add_data(&mut writer, self.project_layout.data.as_deref())?;
+        add_data(&mut writer, self.project_layout.data.as_deref())?;
         let wheel_path = writer.finish()?;
         Ok((wheel_path, format!("cp{}{}", major, min_minor)))
     }
@@ -468,7 +466,7 @@ impl BuildContext {
         .context("Failed to add the files to the wheel")?;
 
         self.add_pth(&mut writer)?;
-        module_writer::add_data(&mut writer, self.project_layout.data.as_deref())?;
+        add_data(&mut writer, self.project_layout.data.as_deref())?;
         let wheel_path = writer.finish()?;
         Ok((
             wheel_path,
@@ -575,7 +573,7 @@ impl BuildContext {
         )?;
 
         self.add_pth(&mut writer)?;
-        module_writer::add_data(&mut writer, self.project_layout.data.as_deref())?;
+        add_data(&mut writer, self.project_layout.data.as_deref())?;
         let wheel_path = writer.finish()?;
         Ok((wheel_path, "py3".to_string()))
     }
@@ -640,7 +638,7 @@ impl BuildContext {
         write_bin(&mut writer, artifact, &self.metadata21, bin_name)?;
 
         self.add_pth(&mut writer)?;
-        module_writer::add_data(&mut writer, self.project_layout.data.as_deref())?;
+        add_data(&mut writer, self.project_layout.data.as_deref())?;
         let wheel_path = writer.finish()?;
         Ok((wheel_path, "py3".to_string()))
     }

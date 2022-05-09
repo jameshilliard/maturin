@@ -147,7 +147,7 @@ my-project
 
 ## Data
 
-You can add wheel data by creating a `<module_name>.data` folder or setting its location as `data` in `[project.metadata.maturin]`.
+You can add wheel data by creating a `<module_name>.data` folder or setting its location as `data` in pyproject.toml under `[tool.maturin]` or in Cargo.toml under `[project.metadata.maturin]`.
 
 The data folder may have the following subfolder:
 

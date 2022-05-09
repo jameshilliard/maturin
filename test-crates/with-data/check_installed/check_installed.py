@@ -10,12 +10,19 @@ installed_data = (
     venv_root.joinpath("data_subdir").joinpath("hello.txt").read_text().strip()
 )
 assert installed_data == "Hi! 😊"
-assert (
-    venv_root.joinpath("include")
-    .joinpath("site")
-    .joinpath(f"python{sys.version_info.major}.{sys.version_info.minor}")
-    .joinpath("with-data")
-    .joinpath("empty.h")
-    .is_file()
-)
+try:
+    assert (
+        venv_root.joinpath("include")
+        .joinpath("site")
+        .joinpath(f"python{sys.version_info.major}.{sys.version_info.minor}")
+        .joinpath("with-data")
+        .joinpath("empty.h")
+        .is_file()
+    )
+    assert False
+except AssertionError:
+    # Debugging help
+    for i in sorted(venv_root.glob("**")):
+        print(i)
+    raise
 print("SUCCESS")
