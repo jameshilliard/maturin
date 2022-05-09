@@ -11,18 +11,17 @@ installed_data = (
 )
 assert installed_data == "Hi! 😊"
 try:
-    assert (
+    header_file = (
         venv_root.joinpath("include")
         .joinpath("site")
         .joinpath(f"python{sys.version_info.major}.{sys.version_info.minor}")
         .joinpath("with-data")
         .joinpath("empty.h")
-        .is_file()
     )
-    assert False
+    assert header_file.is_file(), header_file
 except AssertionError:
     # Debugging help
-    for i in sorted(venv_root.glob("**")):
+    for i in sorted(venv_root.glob("**/*")):
         print(i)
     raise
 print("SUCCESS")
