@@ -1,3 +1,4 @@
+import locale
 import sys
 from pathlib import Path
 
@@ -12,7 +13,11 @@ try:
     installed_data = (
         venv_root.joinpath("data_subdir").joinpath("hello.txt").read_text().strip()
     )
-    assert installed_data == "Hi! 😊"
+    assert installed_data == "Hi! 😊", (
+        installed_data,
+        "Hi! 😊",
+        locale.getpreferredencoding(),
+    )
     header_file = (
         venv_root.joinpath("include")
         .joinpath("site")
